@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cross Training — Basic-Fit Essey-lès-Nancy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF5500;
+    --orange-dark:#D94600;
+    --ink:#0d0d0d;
+    --white:#ffffff;
+    --grey-side:#DDDEE1;
+    --grey-line:#e3e3e3;
+    --grey-mid:#6b6b6b;
+    --paper:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px;}
+  img,svg{display:block;}
+
+  /* ================= HERO ================= */
+  .hero{
+    background:var(--orange);
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+    padding:0 0 44px;
+  }
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 24px 0;
+    max-width:980px;
+    margin:0 auto;
+    position:relative;
+    z-index:2;
+  }
+  .brandmark{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    letter-spacing:0.02em;
+    color:var(--white);
+  }
+  .brandmark span{color:var(--ink);}
+  .club-tag{
+    font-size:12px;
+    font-weight:600;
+    background:var(--ink);
+    color:var(--white);
+    padding:6px 12px;
+    border-radius:20px;
+  }
+  .rings{
+    position:absolute;
+    top:-70px; right:-70px;
+    width:280px;height:280px;
+    z-index:1;
+  }
+  .hero-body{
+    max-width:980px;
+    margin:0 auto;
+    padding:50px 24px 0;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .hero-title{
+    font-size:clamp(46px,8vw,86px);
+    line-height:0.92;
+    margin:0 0 22px;
+    color:var(--white);
+  }
+  .hero-title .stroke{
+    -webkit-text-stroke:2px var(--ink);
+    color:var(--orange);
+  }
+  .hero-sub{
+    font-size:16px;
+    max-width:480px;
+    line-height:1.55;
+    color:#3a1400;
+    font-weight:500;
+    margin:0 0 26px;
+  }
+  .coach-card{
+    display:inline-flex;
+    gap:24px;
+    flex-wrap:wrap;
+    background:var(--white);
+    color:var(--ink);
+    padding:14px 20px;
+    border-radius:8px;
+    font-size:13.5px;
+  }
+  .coach-card b{display:block;font-size:14.5px;}
+  .coach-card .lbl{font-size:10.5px;color:var(--grey-mid);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;}
+
+  /* ================= INFO STRIP ================= */
+  .infostrip{
+    background:var(--ink);
+  }
+  .infostrip .wrap{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:20px 24px;
+  }
+  .infostrip .cell{
+    text-align:center;
+    border-left:1px solid #3a3a3a;
+    padding:0 10px;
+  }
+  .infostrip .cell:first-child{border-left:none;}
+  .infostrip .label{
+    font-size:10.5px;
+    color:#ff8a4d;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:4px;
+  }
+  .infostrip .val{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    color:var(--white);
+  }
+  @media (max-width:640px){
+    .infostrip .wrap{grid-template-columns:repeat(2,1fr);row-gap:16px;}
+    .infostrip .cell{border-left:none;}
+  }
+
+  /* ================= SECTION HEADER BAND ================= */
+  .band{
+    background:var(--orange);
+    color:var(--white);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:stretch;
+    margin:0;
+  }
+  .band .wrap{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:28px 24px;
+    position:relative;
+    z-index:2;
+  }
+  .band-num{
+    font-family:'Anton',sans-serif;
+    font-size:56px;
+    line-height:1;
+    color:var(--ink);
+    flex-shrink:0;
+  }
+  .band-divider{
+    width:3px;
+    align-self:stretch;
+    background:var(--white);
+    flex-shrink:0;
+  }
+  .band h2{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(24px,4vw,36px);
+    line-height:1.05;
+    margin:0;
+    color:var(--white);
+  }
+  .band .ring-deco{
+    position:absolute;
+    top:-40px;right:-30px;
+    width:160px;height:160px;
+    z-index:1;
+  }
+
+  /* ================= SLOTS SECTION ================= */
+  .slots-section{
+    display:flex;
+  }
+  .side-label{
+    background:var(--grey-side);
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-family:'Anton',sans-serif;
+    font-size:34px;
+    letter-spacing:0.04em;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px 8px;
+    flex-shrink:0;
+    width:64px;
+  }
+  .side-label span.accent{
+    display:block;
+    width:64px;
+    height:64px;
+    background:var(--orange);
+  }
+  @media (max-width:640px){
+    .side-label{display:none;}
+  }
+  .slots-main{
+    flex:1;
+    padding:36px 24px 44px;
+  }
+  .slots-intro{
+    max-width:600px;
+    color:var(--grey-mid);
+    font-size:14px;
+    line-height:1.6;
+    margin:0 0 26px;
+  }
+  .slots{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    max-width:820px;
+  }
+  @media (max-width:700px){.slots{grid-template-columns:1fr;}}
+
+  .slot-card{
+    background:var(--white);
+    border:1px solid var(--grey-line);
+    border-left:5px solid var(--orange);
+    border-radius:4px;
+    padding:20px 20px 18px;
+  }
+  .slot-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .slot-idx{
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+    color:var(--orange);
+    margin-bottom:2px;
+  }
+  .slot-time{
+    font-family:'Anton',sans-serif;
+    font-size:28px;
+    letter-spacing:0.01em;
+  }
+  .slot-day{font-size:12px;color:var(--grey-mid);margin-top:2px;font-weight:600;text-transform:uppercase;}
+
+  .badge{
+    font-size:10.5px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    padding:5px 10px;
+    border-radius:3px;
+    white-space:nowrap;
+  }
+  .badge.waiting{background:#f1f1f1;color:#4a4a4a;}
+  .badge.confirmed{background:var(--orange);color:var(--white);}
+  .badge.full{background:var(--ink);color:var(--white);}
+
+  .gauge-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .gauge{flex:1;height:6px;background:#efefef;border-radius:4px;overflow:hidden;}
+  .gauge-fill{height:100%;background:#c9c9c9;border-radius:4px;transition:width .3s ease;}
+  .gauge-fill.ready{background:var(--orange);}
+  .gauge-count{font-size:12.5px;font-weight:700;min-width:40px;text-align:right;}
+  .min-note{font-size:11.5px;color:var(--grey-mid);margin-bottom:14px;font-weight:500;}
+
+  .price-row{
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:1px solid var(--grey-line);
+    padding-top:14px;
+  }
+  .price{font-family:'Anton',sans-serif;font-size:22px;}
+  .price span{font-size:11px;color:var(--grey-mid);font-family:'Inter',sans-serif;font-weight:600;text-transform:uppercase;}
+
+  button{font-family:inherit;cursor:pointer;}
+  .btn{border:none;border-radius:4px;padding:10px 16px;font-size:13.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;transition:opacity .15s;}
+  .btn:hover{opacity:0.85;}
+  .btn:disabled{opacity:0.35;cursor:not-allowed;}
+  .btn-primary{background:var(--ink);color:var(--white);}
+  .btn-orange{background:var(--orange);color:var(--white);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--grey-line);}
+
+  .registrants{margin-top:14px;padding-top:14px;border-top:1px dashed var(--grey-line);}
+  .reg-item{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;}
+  .reg-item .name{font-weight:700;}
+  .reg-item .paid-tag{font-size:11px;color:var(--white);background:var(--ink);padding:3px 8px;border-radius:3px;font-weight:700;text-transform:uppercase;}
+  .reg-item .pay-btn{font-size:11.5px;padding:6px 11px;}
+
+  /* ================= RULES SECTION ================= */
+  .rules-content{
+    padding:34px 24px 50px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  .rules-intro{
+    color:var(--grey-mid);
+    font-size:14px;
+    max-width:600px;
+    margin:0 0 24px;
+    line-height:1.6;
+  }
+  .rule-item{
+    display:flex;
+    gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid var(--grey-line);
+  }
+  .rule-item:last-child{border-bottom:none;}
+  .rule-circle{
+    width:34px;height:34px;
+    border-radius:50%;
+    background:var(--ink);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .rule-text h4{
+    margin:0 0 5px;
+    font-size:15.5px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .rule-text p{
+    margin:0;
+    font-size:13.8px;
+    line-height:1.6;
+    color:#2c2c2c;
+  }
+
+  /* ================= MODAL ================= */
+  .overlay{
+    position:fixed;inset:0;background:rgba(10,10,10,0.6);
+    display:none;align-items:flex-start;justify-content:center;
+    padding:30px 16px;overflow-y:auto;z-index:50;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--white);
+    border-radius:8px;
+    max-width:460px;width:100%;
+    padding:0;
+    margin-top:20px;
+    overflow:hidden;
+  }
+  .modal-head{
+    background:var(--orange);
+    color:var(--white);
+    padding:20px 24px;
+  }
+  .modal-head h3{
+    font-family:'Anton',sans-serif;
+    margin:0 0 4px;font-size:24px;
+  }
+  .modal-head .modal-sub{font-size:12.5px;color:#3a1400;font-weight:600;}
+  .modal-body{padding:22px 24px 24px;}
+  .field{margin-bottom:13px;}
+  .field label{display:block;font-size:11.5px;font-weight:700;margin-bottom:5px;color:#374151;text-transform:uppercase;letter-spacing:0.03em;}
+  .field input{width:100%;padding:9px 11px;border:1px solid var(--grey-line);border-radius:5px;font-size:14px;font-family:inherit;}
+  .field textarea{width:100%;padding:9px 11px;border:1px solid var(--grey-line);border-radius:5px;font-size:13.5px;font-family:inherit;resize:vertical;}
+  .field textarea:focus{outline:2px solid var(--orange);outline-offset:1px;}
+  .coach-row{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:9px 0;border-bottom:1px solid var(--grey-line);
+    font-size:13.5px;font-weight:600;max-width:420px;
+  }
+  .coach-row:last-child{border-bottom:none;}
+  .coach-row select{
+    padding:7px 10px;border:1px solid var(--grey-line);border-radius:5px;
+    font-size:13px;font-family:inherit;font-weight:600;background:var(--white);
+  }
+  .slot-coach{
+    font-size:12px;color:var(--orange-dark);font-weight:700;margin-top:3px;
+  }
+  .field input:focus{outline:2px solid var(--orange);outline-offset:1px;}
+  .check-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;font-size:12.6px;line-height:1.45;color:#2c2c2c;}
+  .check-row input{margin-top:3px;flex-shrink:0;}
+  .check-row.sub{margin-left:26px;margin-top:-6px;color:var(--grey-mid);}
+  .modal-actions{display:flex;gap:10px;margin-top:16px;}
+  .modal-actions .btn{flex:1;}
+  .error-msg{font-size:12px;color:#c0392b;margin-top:-4px;margin-bottom:10px;display:none;font-weight:600;}
+  .success-msg{text-align:center;padding:6px 0 4px;}
+  .success-msg .check-circle{
+    width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--white);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;font-weight:700;
+  }
+  .pay-recap{
+    background:#f7f7f7;border-radius:6px;padding:14px 16px;margin-bottom:16px;font-size:13.5px;
+  }
+  .pay-recap div{display:flex;justify-content:space-between;padding:3px 0;}
+  .pay-recap .amount{font-family:'Anton',sans-serif;font-size:22px;color:var(--orange);}
+  .pay-instructions{
+    background:var(--white);border:1px dashed var(--grey-line);border-radius:6px;
+    padding:14px 16px;margin-bottom:16px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;
+  }
+  .pay-empty{
+    font-size:13px;color:var(--grey-mid);text-align:center;padding:16px 0;
+  }
+
+  /* ================= PAGE PAIEMENT DÉDIÉE ================= */
+  .pay-page-hero{
+    background:var(--orange);color:var(--white);position:relative;overflow:hidden;
+    padding:28px 24px 34px;
+  }
+  .pay-page-hero .wrap{position:relative;z-index:2;padding:0;}
+  .back-link{
+    background:none;border:none;color:var(--white);font-weight:700;font-size:13px;
+    display:inline-flex;align-items:center;gap:6px;padding:0;margin-bottom:18px;cursor:pointer;
+  }
+  .back-link:hover{opacity:0.8;}
+  .pay-page-hero h1{
+    font-family:'Anton',sans-serif;font-size:clamp(34px,6vw,52px);line-height:0.95;margin:0;color:var(--white);
+  }
+  .pay-page-body{
+    max-width:520px;margin:0 auto;padding:36px 24px 60px;
+  }
+  .pay-page-body .pay-recap{margin-bottom:18px;}
+  .pay-page-body .pay-instructions{margin-bottom:18px;}
+  .pay-status-banner{
+    display:flex;align-items:center;gap:10px;
+    background:var(--ink);color:var(--white);
+    padding:14px 16px;border-radius:6px;margin-bottom:18px;font-size:13.5px;font-weight:600;
+  }
+  .pay-status-banner .dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+
+  /* ================= COACH ZONE ================= */
+  .coach-zone{background:#f4f4f4;border-top:1px solid var(--grey-line);}
+  .coach-zone-inner{
+    display:flex;gap:10px;flex-wrap:wrap;
+    padding:16px 24px;
+  }
+  .link-btn{
+    background:none;border:1px solid var(--grey-line);
+    padding:8px 14px;border-radius:20px;
+    font-size:12.5px;font-weight:600;color:var(--ink);
+  }
+  .link-btn:hover{border-color:var(--orange);color:var(--orange);}
+  .panel{display:none;background:var(--white);border-top:1px solid var(--grey-line);padding:22px 0;}
+  .panel.open{display:block;}
+  .panel h4{
+    font-family:'Anton',sans-serif;
+    font-size:18px;margin:0 0 8px;
+  }
+  .panel p{font-size:13px;color:var(--grey-mid);line-height:1.5;margin:0 0 12px;max-width:600px;}
+  .panel .field input{max-width:420px;}
+  .link-status{font-size:12px;font-weight:600;color:var(--orange)!important;}
+  .history-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:9px 0;border-bottom:1px solid var(--grey-line);
+    font-size:13px;gap:10px;flex-wrap:wrap;
+  }
+  .history-row .h-date{font-weight:700;min-width:170px;}
+  .history-row .h-slot{color:var(--grey-mid);min-width:90px;}
+  .history-row .h-name{flex:1;min-width:120px;}
+  .history-row .h-status{font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+  .h-status.paye{background:var(--ink);color:var(--white);}
+  .h-status.en_cours{background:#ffe1cc;color:var(--orange-dark);}
+  .h-status.non_paye{background:#f1f1f1;color:#555;}
+  .empty-note{font-size:13px;color:var(--grey-mid);padding:10px 0;}
+
+  footer{
+    background:var(--ink);
+    color:#c9c9c9;
+    padding:28px 24px 34px;
+    text-align:center;
+    font-size:12px;
+  }
+  footer b{color:var(--white);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="rings" viewBox="0 0 280 280" fill="none">
+    <circle cx="180" cy="100" r="95" stroke="white" stroke-width="3"/>
+    <circle cx="205" cy="130" r="70" stroke="#0d0d0d" stroke-width="3"/>
+  </svg>
+  <div class="hero-top">
+    <div class="brandmark">BASIC<span>-</span>FIT</div>
+    <div class="club-tag">ESSEY-LÈS-NANCY</div>
+  </div>
+  <div class="hero-body">
+    <p class="eyebrow">Séances collectives · format fonctionnel</p>
+    <h1 class="hero-title display">CROSS<br><span class="stroke">TRAINING</span></h1>
+    <p class="hero-sub">Une séance intense en petit groupe, encadrée par un coach, pour progresser en force et en endurance.</p>
+    <div class="coach-card">
+      <div><span class="lbl">Coach</span><b>Victor Geoffroy</b></div>
+      <div><span class="lbl">Club</span><b>Basic-Fit Essey-lès-Nancy</b></div>
+      <div><span class="lbl">Adresse</span><b>1 Av. de Saulxures, 54270</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="infostrip">
+  <div class="wrap">
+    <div class="cell"><div class="label">Prochaine séance</div><div class="val" id="next-session-val">—</div></div>
+    <div class="cell"><div class="label">Créneaux</div><div class="val">14H–18H</div></div>
+    <div class="cell"><div class="label">Groupe</div><div class="val">3 À 6</div></div>
+    <div class="cell"><div class="label">Tarif</div><div class="val">15 €</div></div>
+  </div>
+</div>
+
+<div class="band">
+  <svg class="ring-deco" viewBox="0 0 160 160" fill="none">
+    <circle cx="100" cy="60" r="55" stroke="white" stroke-width="2.5"/>
+  </svg>
+  <div class="wrap">
+    <div class="band-num display">01</div>
+    <div class="band-divider"></div>
+    <h2>CHOISIR<br>UN CRÉNEAU</h2>
+  </div>
+</div>
+
+<div class="slots-section">
+  <div class="side-label"><span class="accent"></span>CRÉNEAUX</div>
+  <div class="slots-main">
+    <p class="slots-intro">Le paiement n'est demandé qu'une fois le minimum de 3 participants atteint sur un créneau. En dessous, votre place est enregistrée en liste d'attente et aucun paiement ne vous sera envoyé.<br>
+    Les créneaux ci-dessous concernent la séance du <b id="session-label-inline">—</b>. La base de données se réinitialise automatiquement chaque jeudi pour ouvrir les inscriptions de la semaine suivante — l'historique des clients, lui, est conservé en permanence.</p>
+    <div class="slots" id="slots-container"></div>
+  </div>
+</div>
+
+<div class="band">
+  <svg class="ring-deco" viewBox="0 0 160 160" fill="none">
+    <circle cx="100" cy="60" r="55" stroke="white" stroke-width="2.5"/>
+  </svg>
+  <div class="wrap">
+    <div class="band-num display">02</div>
+    <div class="band-divider"></div>
+    <h2>CE QUE VOUS<br>ACCEPTEZ</h2>
+  </div>
+</div>
+
+<div class="rules-content">
+  <p class="rules-intro">Extrait des conditions applicables à la séance, reprises du contrat de Personal Training du Coach. À cocher obligatoirement lors de l'inscription.</p>
+
+  <div class="rule-item">
+    <div class="rule-circle">1</div>
+    <div class="rule-text">
+      <h4>Avertissement médical</h4>
+      <p>Il appartient au Client de s'assurer qu'il est en bonne santé et physiquement apte à pratiquer les entraînements proposés, au besoin en consultant un médecin avant de débuter le programme. Le Client reconnaît avoir passé une visite médicale préalable à son inscription, l'autorisant à pratiquer les exercices proposés par le Coach dans le cadre du programme souscrit.</p>
+    </div>
+  </div>
+
+  <div class="rule-item">
+    <div class="rule-circle">2</div>
+    <div class="rule-text">
+      <h4>Assiduité et discipline</h4>
+      <p>Le Client s'engage à être ponctuel. Toute absence non prévenue au moins 24h avant le début d'une séance sera comptabilisée comme réalisée. L'horaire convenu correspond au début du cours : un retard du Client ne pourra être rattrapé. Une tenue adaptée à la pratique sportive est requise.</p>
+    </div>
+  </div>
+
+  <div class="rule-item">
+    <div class="rule-circle">3</div>
+    <div class="rule-text">
+      <h4>Droit à l'image</h4>
+      <p>Les conditions d'utilisation du droit à l'image, ainsi que leur acceptation ou leur refus par le Client, sont précisées dans le contrat.</p>
+    </div>
+  </div>
+
+  <div class="rule-item">
+    <div class="rule-circle">4</div>
+    <div class="rule-text">
+      <h4>Responsabilité</h4>
+      <p>Le Client garantit le Coach contre toute action ou réclamation engagée à son encontre du fait de l'utilisation des formules dans des conditions non conformes aux présentes conditions générales de vente.</p>
+    </div>
+  </div>
+</div>
+
+<div class="coach-zone">
+  <div class="wrap coach-zone-inner">
+    <button class="link-btn" id="toggle-settings">⚙ Espace coach — lien de paiement</button>
+    <button class="link-btn" id="toggle-history">🗂 Historique des inscriptions</button>
+  </div>
+
+  <div class="panel" id="settings-panel">
+    <div class="wrap">
+      <h4>Coachs par créneau</h4>
+      <p>Choisissez qui encadre chaque créneau du mercredi. Cette information reste visible uniquement ici, côté administration.</p>
+      <div id="coach-assign-fields"></div>
+
+      <h4 style="margin-top:24px;">Paiement</h4>
+      <p>Cette page interne s'affiche quand un client clique sur « Payer ». Renseignez vos propres instructions (RIB, numéro Lydia/SumUp, QR code à décrire...) et/ou un lien de paiement externe si vous en avez un — les deux sont facultatifs mais au moins un des deux doit être rempli pour que les clients sachent comment payer.</p>
+      <div class="field">
+        <label style="text-transform:none;font-size:12px;">Instructions de paiement affichées aux clients</label>
+        <textarea id="payment-instructions-input" rows="4" placeholder="Ex. : Paiement par Lydia au 06 12 34 56 78, ou en espèces directement auprès du coach avant la séance."></textarea>
+      </div>
+      <div class="field">
+        <label style="text-transform:none;font-size:12px;">Lien de paiement externe (facultatif)</label>
+        <input type="url" id="payment-link-input" placeholder="https://buy.stripe.com/...">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="saveSettings()">Enregistrer les réglages</button>
+      </div>
+      <p class="link-status" id="link-status"></p>
+    </div>
+  </div>
+
+  <div class="panel" id="history-panel">
+    <div class="wrap">
+      <h4>Historique des clients enregistrés</h4>
+      <p>Toutes les inscriptions passées et en cours, conservées même après la réinitialisation du jeudi.</p>
+      <div id="history-list"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Réservation en ligne · <b>Basic-Fit Essey-lès-Nancy</b> · Les inscriptions sont personnelles et non transférables.
+</footer>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const SLOTS = [
+  {id:'s1', time:'14h – 15h'},
+  {id:'s2', time:'15h – 16h'},
+  {id:'s3', time:'16h – 17h'},
+  {id:'s4', time:'17h – 18h'},
+];
+const MIN_PER_SLOT = 3;
+const MAX_PER_SLOT = 6;
+const PRICE = 15;
+const CLIENTS_DB_KEY = 'hyrox-clients-db';   // base permanente, ne se réinitialise jamais
+const PAYMENT_LINK_KEY = 'hyrox-payment-link';
+const PAYMENT_INSTRUCTIONS_KEY = 'hyrox-payment-instructions';
+const SLOT_COACHES_KEY = 'hyrox-slot-coaches';
+const COACHES = ['Nino', 'Boris', 'Victor'];
+const DEFAULT_SLOT_COACHES = {s1:'Nino', s2:'Boris', s3:'Victor', s4:'Nino'};
+
+let clientsDB = [];        // toutes les inscriptions, toutes semaines confondues
+let paymentLink = '';
+let paymentInstructions = '';
+let slotCoaches = {};
+let currentSession = null; // { iso, label }
+
+/* ---------- Cycle hebdomadaire : reset chaque jeudi ---------- */
+function computeCurrentSession(now = new Date()){
+  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const dow = d.getDay(); // 0 dim ... 4 jeu ... 
+  const daysSinceThursday = (dow - 4 + 7) % 7;
+  const cycleStart = new Date(d);
+  cycleStart.setDate(d.getDate() - daysSinceThursday);
+  const sessionDate = new Date(cycleStart);
+  sessionDate.setDate(cycleStart.getDate() + 6); // le mercredi de ce cycle
+  const iso = sessionDate.toISOString().slice(0,10);
+  const label = sessionDate.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  const shortLabel = sessionDate.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'});
+  return {iso, label, shortLabel};
+}
+
+function uid(){
+  return 'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+}
+
+/* ---------- Chargement / sauvegarde ---------- */
+async function loadData(){
+  try{
+    const res = await window.storage.get(CLIENTS_DB_KEY, true);
+    clientsDB = res && res.value ? JSON.parse(res.value) : [];
+  }catch(e){
+    clientsDB = [];
+  }
+  try{
+    const res2 = await window.storage.get(PAYMENT_LINK_KEY, true);
+    paymentLink = res2 && res2.value ? res2.value : '';
+  }catch(e){
+    paymentLink = '';
+  }
+  try{
+    const res3 = await window.storage.get(PAYMENT_INSTRUCTIONS_KEY, true);
+    paymentInstructions = res3 && res3.value ? res3.value : '';
+  }catch(e){
+    paymentInstructions = '';
+  }
+  try{
+    const res4 = await window.storage.get(SLOT_COACHES_KEY, true);
+    slotCoaches = res4 && res4.value ? JSON.parse(res4.value) : {...DEFAULT_SLOT_COACHES};
+  }catch(e){
+    slotCoaches = {...DEFAULT_SLOT_COACHES};
+  }
+  document.getElementById('payment-link-input').value = paymentLink;
+  document.getElementById('payment-instructions-input').value = paymentInstructions;
+  renderCoachFields();
+  currentSession = computeCurrentSession();
+  document.getElementById('next-session-val').textContent = currentSession.shortLabel;
+  document.getElementById('session-label-inline').textContent = currentSession.label;
+  render();
+  renderHistory();
+}
+
+async function saveClientsDB(){
+  try{
+    await window.storage.set(CLIENTS_DB_KEY, JSON.stringify(clientsDB), true);
+  }catch(e){
+    console.error('Erreur de sauvegarde base clients', e);
+  }
+}
+
+function renderCoachFields(){
+  const container = document.getElementById('coach-assign-fields');
+  container.innerHTML = SLOTS.map(slot => `
+    <div class="coach-row">
+      <span>${slot.time}</span>
+      <select id="coach-select-${slot.id}">
+        ${COACHES.map(c => `<option value="${c}" ${slotCoaches[slot.id] === c ? 'selected' : ''}>${c}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+async function saveSettings(){
+  const val = document.getElementById('payment-link-input').value.trim();
+  const instructions = document.getElementById('payment-instructions-input').value.trim();
+  paymentLink = val;
+  paymentInstructions = instructions;
+
+  const newCoaches = {};
+  SLOTS.forEach(slot => {
+    const sel = document.getElementById('coach-select-' + slot.id);
+    newCoaches[slot.id] = sel ? sel.value : slotCoaches[slot.id];
+  });
+  slotCoaches = newCoaches;
+
+  try{
+    await window.storage.set(PAYMENT_LINK_KEY, val, true);
+    await window.storage.set(PAYMENT_INSTRUCTIONS_KEY, instructions, true);
+    await window.storage.set(SLOT_COACHES_KEY, JSON.stringify(slotCoaches), true);
+    const status = document.getElementById('link-status');
+    status.textContent = 'Enregistré.';
+    setTimeout(() => status.textContent = '', 3000);
+    render();
+  }catch(e){
+    console.error(e);
+  }
+}
+
+/* ---------- Rendu des créneaux (filtrés sur la séance en cours) ---------- */
+function entriesForSlot(slotId){
+  return clientsDB.filter(r => r.sessionDate === currentSession.iso && r.slotId === slotId);
+}
+
+function render(){
+  const container = document.getElementById('slots-container');
+  container.innerHTML = '';
+  SLOTS.forEach((slot, i) => {
+    const regs = entriesForSlot(slot.id);
+    const count = regs.length;
+    const confirmed = count >= MIN_PER_SLOT;
+    const full = count >= MAX_PER_SLOT;
+
+    const card = document.createElement('div');
+    card.className = 'slot-card';
+
+    let badgeHtml;
+    if(full) badgeHtml = '<span class="badge full">Complet</span>';
+    else if(confirmed) badgeHtml = '<span class="badge confirmed">Confirmé</span>';
+    else badgeHtml = '<span class="badge waiting">En attente</span>';
+
+    const pct = Math.min(100, Math.round((count / MAX_PER_SLOT) * 100));
+
+    let regsHtml = '';
+    if(count > 0){
+      regsHtml = '<div class="registrants">' + regs.map(r => {
+        if(r.paidStatus === 'paye'){
+          return `<div class="reg-item"><span class="name">${escapeHtml(r.prenom)}</span><span class="paid-tag">Payé</span></div>`;
+        } else if(confirmed){
+          return `<div class="reg-item"><span class="name">${escapeHtml(r.prenom)}</span><a class="btn btn-orange pay-btn" href="${buildPaymentUrl(r.id)}" style="text-decoration:none;display:inline-block;">Payer 15€</a></div>`;
+        } else {
+          return `<div class="reg-item"><span class="name">${escapeHtml(r.prenom)}</span><span style="font-size:11px;color:var(--grey-mid);font-weight:600;text-transform:uppercase;">Liste d'attente</span></div>`;
+        }
+      }).join('') + '</div>';
+    }
+
+    card.innerHTML = `
+      <div class="slot-top">
+        <div>
+          <div class="slot-idx display">0${i+1}</div>
+          <div class="slot-time display">${slot.time}</div>
+          <div class="slot-day">Mercredi</div>
+        </div>
+        ${badgeHtml}
+      </div>
+      <div class="gauge-row">
+        <div class="gauge"><div class="gauge-fill ${confirmed ? 'ready' : ''}" style="width:${pct}%"></div></div>
+        <div class="gauge-count">${count}/${MAX_PER_SLOT}</div>
+      </div>
+      <div class="min-note">${confirmed ? 'Minimum atteint — paiement débloqué' : `Minimum ${MIN_PER_SLOT} requis pour ouvrir le paiement`}</div>
+      <div class="price-row">
+        <div class="price display">${PRICE}€ <span>/ séance</span></div>
+        <button class="btn ${full ? 'btn-ghost' : 'btn-primary'}" ${full ? 'disabled' : ''} onclick="openModal('${slot.id}')">${full ? 'Complet' : "S'inscrire"}</button>
+      </div>
+      ${regsHtml}
+    `;
+    container.appendChild(card);
+  });
+}
+
+/* ---------- Historique (base permanente) ---------- */
+function renderHistory(){
+  const list = document.getElementById('history-list');
+  if(clientsDB.length === 0){
+    list.innerHTML = '<p class="empty-note">Aucune inscription enregistrée pour le moment.</p>';
+    return;
+  }
+  const sorted = [...clientsDB].sort((a,b) => b.ts - a.ts);
+  const slotLabel = id => (SLOTS.find(s => s.id === id) || {}).time || id;
+  list.innerHTML = sorted.map(r => `
+    <div class="history-row">
+      <span class="h-date">${new Date(r.sessionDate).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}</span>
+      <span class="h-slot">${slotLabel(r.slotId)}</span>
+      <span class="h-name">${escapeHtml(r.prenom)} ${escapeHtml(r.nom)} — ${escapeHtml(r.email)}</span>
+      <span class="h-status ${r.paidStatus}">${r.paidStatus === 'paye' ? 'Payé' : 'Non payé'}</span>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ---------- Modal inscription ---------- */
+function openModal(slotId){
+  const slot = SLOTS.find(s => s.id === slotId);
+  const modal = document.getElementById('modal-content');
+  modal.innerHTML = `
+    <div class="modal-head">
+      <h3 class="display">Inscription</h3>
+      <div class="modal-sub">${slot.time} · Mercredi ${currentSession.shortLabel} · Cross Training · 15€ / séance</div>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label>Prénom</label><input type="text" id="f-prenom" placeholder="Prénom"></div>
+      <div class="field"><label>Nom</label><input type="text" id="f-nom" placeholder="Nom"></div>
+      <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="vous@exemple.com"></div>
+      <div class="field"><label>Téléphone</label><input type="tel" id="f-tel" placeholder="06 00 00 00 00"></div>
+
+      <div class="check-row"><input type="checkbox" id="c-sante"><label for="c-sante">J'ai pris connaissance de l'avertissement médical : il m'appartient de m'assurer que je suis en bonne santé et physiquement apte à pratiquer les entraînements proposés, au besoin en consultant un médecin avant de débuter.</label></div>
+      <div class="check-row"><input type="checkbox" id="c-assiduite"><label for="c-assiduite">Je m'engage à être ponctuel et je comprends que toute absence non prévenue au moins 24h avant le début de la séance sera comptabilisée comme réalisée.</label></div>
+      <div class="check-row"><input type="checkbox" id="c-image"><label for="c-image">J'accepte les conditions d'utilisation du droit à l'image précisées dans le contrat.</label></div>
+      <div class="check-row sub"><input type="checkbox" id="c-image-refus"><label for="c-image-refus">Je refuse spécifiquement l'utilisation de mon image.</label></div>
+      <div class="check-row"><input type="checkbox" id="c-responsabilite"><label for="c-responsabilite">Je garantis le Coach contre toute action ou réclamation engagée à son encontre du fait de l'utilisation de la formule dans des conditions non conformes aux conditions générales de vente.</label></div>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="submitRegistration('${slotId}')">Valider</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+}
+
+async function submitRegistration(slotId){
+  const prenom = document.getElementById('f-prenom').value.trim();
+  const nom = document.getElementById('f-nom').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const tel = document.getElementById('f-tel').value.trim();
+  const sante = document.getElementById('c-sante').checked;
+  const assiduite = document.getElementById('c-assiduite').checked;
+  const responsabilite = document.getElementById('c-responsabilite').checked;
+  const imageRefus = document.getElementById('c-image-refus').checked;
+
+  const errBox = document.getElementById('error-msg');
+
+  if(!prenom || !nom || !email){
+    errBox.textContent = 'Merci de renseigner au moins votre prénom, nom et email.';
+    errBox.style.display = 'block';
+    return;
+  }
+  if(!sante || !assiduite || !responsabilite){
+    errBox.textContent = "Les cases relatives à l'avertissement médical, l'assiduité et la responsabilité doivent être cochées pour valider l'inscription.";
+    errBox.style.display = 'block';
+    return;
+  }
+
+  const entry = {
+    id: uid(),
+    sessionDate: currentSession.iso,
+    slotId,
+    prenom, nom, email, tel,
+    imageAccepted: !imageRefus,
+    paidStatus: 'non_paye', // non_paye | en_cours | paye
+    ts: Date.now()
+  };
+
+  clientsDB.push(entry);
+  await saveClientsDB();
+
+  const countNow = entriesForSlot(slotId).length;
+
+  const modal = document.getElementById('modal-content');
+  modal.innerHTML = `
+    <div class="modal-body">
+      <div class="success-msg">
+        <div class="check-circle">✓</div>
+        <h3 class="display" style="margin-bottom:6px;">Inscription enregistrée</h3>
+        <p style="font-size:13.5px;color:var(--grey-mid);line-height:1.5;">
+          ${countNow >= MIN_PER_SLOT
+            ? "Le minimum de participants est atteint sur ce créneau : le paiement de 15 € est maintenant disponible depuis la carte du créneau."
+            : `Vous êtes en liste d'attente. Le paiement ne sera proposé qu'une fois ${MIN_PER_SLOT} inscrits sur ce créneau.`}
+        </p>
+        <button class="btn btn-primary" style="margin-top:16px;width:100%;" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  `;
+  render();
+  renderHistory();
+}
+
+/* ---------- Paiement : lien vers la page dédiée paiement.html ---------- */
+function buildPaymentUrl(entryId){
+  const entry = clientsDB.find(r => r.id === entryId);
+  if(!entry) return 'paiement.html';
+  const slot = SLOTS.find(s => s.id === entry.slotId) || {};
+  const params = new URLSearchParams({
+    id: entry.id,
+    prenom: entry.prenom,
+    nom: entry.nom,
+    slot: slot.time || '',
+    date: entry.sessionDate,
+    montant: PRICE
+  });
+  return 'paiement.html?' + params.toString();
+}
+
+async function confirmPaid(entryId){
+  const entry = clientsDB.find(r => r.id === entryId);
+  if(entry){
+    entry.paidStatus = 'paye';
+    await saveClientsDB();
+    render();
+    renderHistory();
+  }
+}
+
+/* ---------- UI panneaux coach ---------- */
+document.getElementById('toggle-settings').addEventListener('click', () => {
+  document.getElementById('settings-panel').classList.toggle('open');
+  document.getElementById('history-panel').classList.remove('open');
+});
+document.getElementById('toggle-history').addEventListener('click', () => {
+  document.getElementById('history-panel').classList.toggle('open');
+  document.getElementById('settings-panel').classList.remove('open');
+});
+
+document.getElementById('overlay').addEventListener('click', (e) => {
+  if(e.target.id === 'overlay') closeModal();
+});
+
+loadData();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement — Cross Training — Basic-Fit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF5500;
+    --ink:#0d0d0d;
+    --white:#ffffff;
+    --grey-line:#e3e3e3;
+    --grey-mid:#6b6b6b;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#fff;color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:0.01em;}
+
+  .hero{background:var(--orange);color:var(--white);position:relative;overflow:hidden;padding:28px 24px 34px;}
+  .rings{position:absolute;top:-60px;right:-60px;width:220px;height:220px;z-index:1;}
+  .hero-inner{position:relative;z-index:2;max-width:520px;margin:0 auto;}
+  .back-link{color:var(--white);font-weight:700;font-size:13px;display:inline-block;margin-bottom:18px;text-decoration:none;}
+  .back-link:hover{opacity:0.8;}
+  .hero h1{font-size:clamp(32px,6vw,48px);line-height:0.95;margin:0;color:var(--white);}
+
+  .body-wrap{max-width:520px;margin:0 auto;padding:32px 24px 60px;}
+  .status-banner{display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--white);padding:14px 16px;border-radius:6px;margin-bottom:18px;font-size:13.5px;font-weight:600;}
+  .status-banner.paid{background:#1f9d55;}
+  .status-banner .dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+  .status-banner.paid .dot{background:var(--white);}
+
+  .recap{background:#f7f7f7;border-radius:6px;padding:14px 16px;margin-bottom:18px;font-size:13.5px;}
+  .recap div{display:flex;justify-content:space-between;padding:3px 0;gap:12px;}
+  .recap .amount{font-family:'Anton',sans-serif;font-size:22px;color:var(--orange);}
+
+  .instructions{background:var(--white);border:1px dashed var(--grey-line);border-radius:6px;padding:14px 16px;margin-bottom:18px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;}
+  .empty-note{font-size:13px;color:var(--grey-mid);text-align:center;padding:16px 0;}
+
+  .btn{border:none;border-radius:4px;padding:12px 18px;font-size:13.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.02em;width:100%;text-decoration:none;display:block;text-align:center;transition:opacity .15s;cursor:pointer;font-family:inherit;}
+  .btn:hover{opacity:0.85;}
+  .btn-orange{background:var(--orange);color:var(--white);}
+  .btn-primary{background:var(--ink);color:var(--white);margin-top:10px;}
+  .foot-note{font-size:11.5px;color:var(--grey-mid);text-align:center;margin-top:24px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="rings" viewBox="0 0 220 220" fill="none">
+    <circle cx="140" cy="80" r="80" stroke="white" stroke-width="2.5"/>
+  </svg>
+  <div class="hero-inner">
+    <a class="back-link" href="reservation-cross-training.html">← Retour aux créneaux</a>
+    <h1 class="display">Paiement<br>de la séance</h1>
+  </div>
+</div>
+
+<div class="body-wrap">
+  <div id="status-banner-container"></div>
+  <div class="recap" id="recap"></div>
+  <div id="payment-content"></div>
+  <div id="confirm-container"></div>
+  <p class="foot-note">Basic-Fit Essey-lès-Nancy · Cross Training · Ce paiement est confirmé manuellement par le coach à réception.</p>
+</div>
+
+<script>
+const CLIENTS_DB_KEY = 'hyrox-clients-db';
+const PAYMENT_LINK_KEY = 'hyrox-payment-link';
+const PAYMENT_INSTRUCTIONS_KEY = 'hyrox-payment-instructions';
+
+const params = new URLSearchParams(window.location.search);
+const entryId = params.get('id') || '';
+const fallback = {
+  prenom: params.get('prenom') || '',
+  nom: params.get('nom') || '',
+  slot: params.get('slot') || '',
+  date: params.get('date') || '',
+  montant: params.get('montant') || '15'
+};
+
+let clientsDB = [];
+let paymentLink = '';
+let paymentInstructions = '';
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+async function readKey(key){
+  try{
+    const res = await window.storage.get(key, true);
+    return res && res.value ? res.value : '';
+  }catch(e){
+    return '';
+  }
+}
+
+async function loadAll(){
+  const db = await readKey(CLIENTS_DB_KEY);
+  try{ clientsDB = db ? JSON.parse(db) : []; }catch(e){ clientsDB = []; }
+  paymentLink = await readKey(PAYMENT_LINK_KEY);
+  paymentInstructions = await readKey(PAYMENT_INSTRUCTIONS_KEY);
+  render();
+}
+
+function getEntry(){
+  return clientsDB.find(r => r.id === entryId);
+}
+
+function render(){
+  const entry = getEntry();
+  const prenom = entry ? entry.prenom : fallback.prenom;
+  const nom = entry ? entry.nom : fallback.nom;
+  const dateRaw = entry ? entry.sessionDate : fallback.date;
+  const paid = entry ? entry.paidStatus === 'paye' : false;
+
+  let dateLabel = dateRaw;
+  try{
+    if(dateRaw) dateLabel = new Date(dateRaw).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'});
+  }catch(e){}
+
+  document.getElementById('status-banner-container').innerHTML = paid
+    ? `<div class="status-banner paid"><span class="dot"></span> Paiement confirmé — à bientôt sur le tapis !</div>`
+    : `<div class="status-banner"><span class="dot"></span> En attente de confirmation du paiement</div>`;
+
+  document.getElementById('recap').innerHTML = `
+    <div><span>Client</span><span>${escapeHtml(prenom)} ${escapeHtml(nom)}</span></div>
+    <div><span>Créneau</span><span>${escapeHtml(fallback.slot)}</span></div>
+    <div><span>Séance</span><span>${escapeHtml(dateLabel)}</span></div>
+    <div><span>Montant</span><span class="amount">${escapeHtml(fallback.montant)} €</span></div>
+  `;
+
+  const hasInstructions = paymentInstructions && paymentInstructions.trim().length > 0;
+  const hasLink = paymentLink && paymentLink.trim().length > 0;
+
+  if(hasInstructions || hasLink){
+    document.getElementById('payment-content').innerHTML = `
+      ${hasInstructions ? `<div class="instructions">${escapeHtml(paymentInstructions)}</div>` : ''}
+      ${hasLink ? `<a class="btn btn-orange" href="${escapeHtml(paymentLink)}" target="_blank" rel="noopener">Ouvrir le lien de paiement</a>` : ''}
+    `;
+  } else {
+    document.getElementById('payment-content').innerHTML = `<p class="empty-note">Aucun moyen de paiement n'est encore configuré. Le coach doit ajouter ses instructions dans l'espace coach du site de réservation.</p>`;
+  }
+
+  document.getElementById('confirm-container').innerHTML = (!paid && entry)
+    ? `<button class="btn btn-primary" onclick="confirmPayment()">Confirmer le paiement reçu</button>`
+    : '';
+}
+
+async function confirmPayment(){
+  const entry = getEntry();
+  if(!entry) return;
+  entry.paidStatus = 'paye';
+  try{
+    await window.storage.set(CLIENTS_DB_KEY, JSON.stringify(clientsDB), true);
+  }catch(e){
+    console.error(e);
+  }
+  render();
+}
+
+loadAll();
+</script>
+
+</body>
+</html>
